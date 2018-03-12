@@ -21,7 +21,7 @@ class Astar {
 		for (let i=0, labelLen=label.length; i<labelLen; i++) {
 			currTile = label[i];
 			if (currTile === '0') {
-				goalPos = 8;
+				continue;
 			} else {
 				goalPos = parseInt(currTile) - 1;
 			}
