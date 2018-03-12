@@ -25,3 +25,25 @@
     height: 75px;
     cursor: pointer;
 }
+.layout {
+    width: 333px;
+    height: 345px;
+    box-shadow: 0 0 1px rgba(5, 13, 26, 0.8);
+    line-height: 0;
+    position: relative;
+    margin: 0 auto;
+}
+.background {
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-size: 333px 345px;
+    position: absolute;
+}
+.background-barns {
+    background-image: url("../images/barns.jpg");
+}
+.background-chedda {
+    background-image: url("../images/chedda.jpg");
+}
