@@ -1,0 +1,27 @@
+.container {
+	height: 100%;
+	width: 100%;
+    display: -ms-flexbox;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-box;
+    display: box;
+    -ms-flex-direction: row;
+    -webkit-box-orient: horizontal;
+    -moz-box-orient: horizontal;
+    -ms-box-orient: horizontal;
+    box-orient: horizontal;
+}
+.nav {
+    text-align: center;
+    width: 115px;
+    -ms-flex: 0 115px;
+    -webkit-box-flex:  0;
+    -moz-box-flex:  0;
+    -ms-box-flex:  0;
+    box-flex:  0;
+}
+.thumbnail {
+    height: 75px;
+    cursor: pointer;
+}
