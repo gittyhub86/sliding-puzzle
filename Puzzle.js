@@ -20,11 +20,11 @@ class Puzzle {
 		}
 
 	}
-	transition(to) {
+	transitionSolution(to) {
 		const label = this.label;
 		const blankLocation = this.spot;
-		const num = this.label[to];
-		const newBlankLabel = num.toString();
+		const newBlankLabel = this.label[to];
+		//const newBlankLabel = num.toString();
 		let newLabel = '';
 		for (let i=0; i<9; i++) {
 			if (i === blankLocation) {
@@ -37,10 +37,74 @@ class Puzzle {
 		}
 		return new Puzzle(newLabel);
 	}
+	solution() {
+		const startTime = new Date().getTime();
+		let shortest = null;
+		const pq = new PriorityQueue;
+		const astar = new Astar;
+		let tmpPath, lastNode, newNode, newPath;
+		if (this.label) {
+			let initPath = [this];
+			pq.enqueue(initPath, 1);
+			while (!pq.isEmpty()) {
+				if (new Date().getTime() - startTime > 3000) {
+					break;
+				}
+				tmpPath = pq.dequeue()[0];
+				lastNode = tmpPath[tmpPath.length-1];
+				if (lastNode.label === lastNode.goal) {
+					if (shortest === null || tmpPath.length < shortest.length) {
+						shortest = tmpPath;
+						console.log('found shortest: ', shortest);
+					}
+				}
+				if (shortest === null || tmpPath.length+1 < shortest.length) {
+					for (let shift of this.shifts.get(lastNode.spot)) {
+						newNode = lastNode.transitionSolution(shift);
+						if (this.notInPath(newNode, tmpPath)) {
+							newPath = tmpPath.concat(newNode);
+							let priorty = astar.manhattenDistance(newNode);
+							pq.enqueue(newPath, priorty);
+						}
+					}
+				}
+			}
+			if (shortest === null) {
+				return this.solutionFallback(pq, astar);
+			} else {
+				return shortest;
+			}
+		}
+	}
+	solutionFallback(pq, astar) {
+		let tmpPath, lastNode, newNode, newPath;
+		while (!pq.isEmpty()) {
+			tmpPath = pq.dequeue()[0];
+			lastNode = tmpPath[tmpPath.length-1];
+			if (lastNode.label === lastNode.goal) {
+				return tmpPath;
+			}
+			for (let shift of this.shifts.get(lastNode.spot)) {
+				newNode = lastNode.transitionSolution(shift);
+				if (this.notInPath(newNode, tmpPath)) {
+					newPath = tmpPath.concat(newNode);
+					let priority = astar.manhattenDistance(newNode);
+					pq.enqueue(newPath, priority);
+				}
+			}
+		}
+		return null;
+	}
+	notInPath(node, path) {
+		for (let elt of path) {
+			if (node.label === elt.label) {
+				return false;
+			}
+		}
+		return true;
+	}
 }
 
-const order = '125638047';
+const order = '876543210';
 const p = new Puzzle(order);
-
-const newPuzzle = p.transition(3);
-console.log(newPuzzle.label);
+p.solution();
