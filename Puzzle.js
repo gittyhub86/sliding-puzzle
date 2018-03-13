@@ -1,6 +1,5 @@
 class Puzzle {
-	constructor(order) {
-		this.label = order;
+	constructor(order=null) {
 		this.goal = '123456780';
 		this.shifts = new Map([
 				[0, [1, 3]],
@@ -13,9 +12,12 @@ class Puzzle {
 				[7, [4, 6, 8]],
 				[8, [5, 7]],
 			]);
-		for (let i=0; i<order.length; i++) {
-			if (order[i] === '0') {
-				this.spot = i;
+		if (order) {
+			this.label = order;
+			for (let i=0; i<order.length; i++) {
+				if (order[i] === '0') {
+					this.spot = i;
+				}
 			}
 		}
 
@@ -102,6 +104,14 @@ class Puzzle {
 			}
 		}
 		return true;
+	}
+}
+
+class PuzzleCat extends Puzzle {
+	constructor(tiles) {
+		super();
+		this.tiles = tiles;
+		console.log(tiles);
 	}
 }
 
