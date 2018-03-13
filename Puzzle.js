@@ -105,6 +105,22 @@ class Puzzle {
 		}
 		return true;
 	}
+	solvable(start) {
+		let inversions = 0;
+		const startLength = start.length;
+		for (let i=0; i<startLength; i++) {
+			for (let j=i+1; j<startLength; j++) {
+				if (parseInt(start[i]) && parseInt(start[j]) &&
+					parseInt(start[i]) > parseInt(start[j])) {
+					inversions++;
+				}
+			}
+		}
+		if (inversions%2 == 0) {
+			return true
+		}
+		return false;
+	}
 }
 
 class PuzzleCat extends Puzzle {
