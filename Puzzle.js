@@ -127,7 +127,37 @@ class PuzzleCat extends Puzzle {
 	constructor(tiles) {
 		super();
 		this.tiles = tiles;
-		console.log(tiles);
+		this.init();
+	}
+	init() {
+		this.cats = ['barns', 'chedda'];
+		this.thumbnails = document.querySelectorAll('.thumbnail');
+		this.background = document.querySelectorAll('.background');
+		this.mainCat = document.querySelectorAll('.main-cat.hide');
+		this.congratulate = document.querySelectorAll('.congratulate');
+		this.mainBarns = this.mainCat[0];
+		this.mainChedda = this.mainCat[1];
+		this.handlers()
+	}
+	handlers() {
+		this.thumbnails.forEach((thumbnail, idx) => {
+			thumbnail.addEventListener('click', () => {
+				this.thumbnailHandler(idx);
+			});
+		});
+	}
+	thumbnailHandler(idx) {
+		if (this.cats[idx] === 'barns') {
+			this.background[idx].style.backgroundImage = "url(images/" +  "barns.jpg)";
+			this.mainBarns.className = "main-cat";
+			this.mainChedda.className = "main-cat hide";
+			this.congratulate[idx].className = "hide";
+		} else if (this.cats[idx] === 'chedda') {
+			this.background[idx].style.backgroundImage = "url(images/" + "chedda.jpg)";
+			this.mainBarns.className = "main-cat hide";
+			this.mainChedda.className = "main-cat";
+			this.congratulate[idx].className = "hide";
+		}
 	}
 }
 

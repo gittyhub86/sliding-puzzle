@@ -55,3 +55,6 @@
     box-shadow: 0 0 3px rgba(5, 13, 26, 0.8);
     height: 115px;
 }
+.hide {
+    display: none;
+}
