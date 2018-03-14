@@ -134,7 +134,7 @@ class PuzzleCat extends Puzzle {
 		this.thumbnails = document.querySelectorAll('.thumbnail');
 		this.background = document.querySelectorAll('.background');
 		this.mainCat = document.querySelectorAll('.main-cat.hide');
-		this.congratulate = document.querySelectorAll('.congratulate');
+		this.congratulate = document.querySelectorAll('.congratulate.hide');
 		this.mainBarns = this.mainCat[0];
 		this.mainChedda = this.mainCat[1];
 		this.shuffle = document.querySelectorAll('.shuffle');
@@ -158,6 +158,7 @@ class PuzzleCat extends Puzzle {
 			this.background[idx].style.backgroundImage = "url(images/" +  "barns.jpg)";
 			this.mainBarns.className = "main-cat";
 			this.mainChedda.className = "main-cat hide";
+
 			this.congratulate[idx].className = "congratulate hide";
 		} else if (this.cats[idx] === 'chedda') {
 			this.background[idx].style.backgroundImage = "url(images/" + "chedda.jpg)";
@@ -175,7 +176,15 @@ class PuzzleCat extends Puzzle {
 		} while (!this.solvable(tempLabel));
 		this.label = tempLabel;
 		console.log('label: ', this.label);
-
+		for (let i=0, len=this.label.length; i<len; i++) {
+			if (this.label[i] === '0') {
+				this.spot = i;
+			} else {
+				const idx = parseInt(this.label[i]) -1;
+				this.tiles[idx].className = "container-tile tile pos" + i;
+				this.tiles[idx].boardPos = i;
+			}
+		}
 	}
 	tileSelector() {
 		this.cats.forEach((cat, idx) => {
