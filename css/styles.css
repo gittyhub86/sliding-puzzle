@@ -125,3 +125,6 @@
     left: 222px;
     top: 230px;
 }
+.animate {
+    transition: all 0.5s ease;
+}
