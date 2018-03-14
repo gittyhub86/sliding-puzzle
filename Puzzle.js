@@ -126,6 +126,7 @@ class Puzzle {
 class PuzzleCat extends Puzzle {
 	constructor(tiles) {
 		super();
+		//this.tiles = tiles;
 		this.init();
 	}
 	init() {
@@ -157,22 +158,37 @@ class PuzzleCat extends Puzzle {
 			this.background[idx].style.backgroundImage = "url(images/" +  "barns.jpg)";
 			this.mainBarns.className = "main-cat";
 			this.mainChedda.className = "main-cat hide";
-			this.congratulate[idx].className = "hide";
+			this.congratulate[idx].className = "congratulate hide";
 		} else if (this.cats[idx] === 'chedda') {
 			this.background[idx].style.backgroundImage = "url(images/" + "chedda.jpg)";
 			this.mainBarns.className = "main-cat hide";
 			this.mainChedda.className = "main-cat";
-			this.congratulate[idx].className = "hide";
+			this.congratulate[idx].className = "congratulate hide";
 		}
 		this.label = null;
 	}
 	shufflePuzzle() {
+		this.tileSelector();
 		let tempLabel;
 		do {
 			tempLabel = buildLabel();
 		} while (!this.solvable(tempLabel));
 		this.label = tempLabel;
 		console.log('label: ', this.label);
+
+	}
+	tileSelector() {
+		this.cats.forEach((cat, idx) => {
+			if (this.cat === 'barns') {
+				this.tiles = $('.background.background-barns .container-tile');
+				this.background[idx].style.backgroundImage = "url(images/barns_transparent.jpg)";
+				this.congratulate[idx].className = "congratulate hide";
+			} else if (this.cat === 'chedda') {
+				this.tiles = $('.background.background-chedda .container-tile');
+				this.background[idx].style.backgroundImage = "url(images/chedda_transparent.jpg)";
+				this.congratulate[idx].className = "congratulate hide";
+			}
+		});
 	}
 }
 
