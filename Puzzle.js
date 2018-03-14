@@ -154,6 +154,7 @@ class PuzzleCat extends Puzzle {
 	}
 	thumbnailHandler(idx) {
 		this.cat = this.cats[idx];
+		this.hideTiles();
 		if (this.cats[idx] === 'barns') {
 			this.background[idx].style.backgroundImage = "url(images/" +  "barns.jpg)";
 			this.mainBarns.className = "main-cat";
@@ -197,6 +198,16 @@ class PuzzleCat extends Puzzle {
 				this.background[idx].style.backgroundImage = "url(images/chedda_transparent.jpg)";
 				this.congratulate[idx].className = "congratulate hide";
 			}
+		});
+	}
+	hideTiles() {
+		if (this.cat === 'barns') {
+			this.tiles = $('.background.background-barns .container-tile');
+		} else if (this.cat === 'chedda') {
+			this.tiles = $('.background.background-chedda .container-tile');
+		}
+		$.each(this.tiles, (key, tile) => {
+			tile.classList.add("hide");
 		});
 	}
 }
