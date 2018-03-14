@@ -126,11 +126,11 @@ class Puzzle {
 class PuzzleCat extends Puzzle {
 	constructor(tiles) {
 		super();
-		//this.tiles = tiles;
 		this.init();
 	}
 	init() {
 		this.cats = ['barns', 'chedda'];
+		this.removeHandlers = [];
 		this.thumbnails = document.querySelectorAll('.thumbnail');
 		this.background = document.querySelectorAll('.background');
 		this.mainCat = document.querySelectorAll('.main-cat.hide');
@@ -170,7 +170,12 @@ class PuzzleCat extends Puzzle {
 		this.label = null;
 	}
 	shufflePuzzle() {
+		this.removeTileHandler();
+		this.removeHandlers = [];
 		this.tileSelector();
+		$.each(this.tiles, (key, tile) => {
+			this.removeHandlers.push(this.listener(tile, 'click', this.moveTileHandler(tile)));
+		});
 		let tempLabel;
 		do {
 			tempLabel = buildLabel();
@@ -209,6 +214,54 @@ class PuzzleCat extends Puzzle {
 		$.each(this.tiles, (key, tile) => {
 			tile.classList.add("hide");
 		});
+	}
+	listener(element, type, handler) {
+		element.addEventListener(type, handler);
+		return function() {
+			element.removeEventListener(type, handler);
+		}
+	}
+	removeTileHandler() {
+		this.removeHandlers.forEach(handler => {
+			handler();
+		});
+	}
+	moveTileHandler(tile) {
+		return () => {
+			this.playerMove(tile);
+		};
+	}
+	playerMove(tile) {
+		if (this.shifts.get(this.spot).includes(tile.boardPos)) {
+			const spot = this.spot;
+			this.transition(tile.boardPos);
+			tile.className = "tile container-tile animate pos" + this.spot;
+			this.spot = tile.boardPos;
+			tile.boardPos = spot;
+			if (this.label === this.goal) {
+				if (this.cat === 'barns') {
+					this.congratulate[0].classList.remove('hide');
+				}
+				else {
+					this.congratulate[1].classList.remove('hide');
+				}
+			}
+		}
+	}
+	transition(to) {
+		const blankLocation = this.spot;
+		const newBlankLabel = this.label[to];
+		let newLabel = '';
+		for (let i=0; i<9; i++) {
+			if (i == blankLocation) {
+				newLabel += newBlankLabel;
+			} else if (i == to) {
+				newLabel += '0';
+			} else {
+				newLabel += this.label[i];
+			}
+		}
+		this.label = newLabel;
 	}
 }
 
