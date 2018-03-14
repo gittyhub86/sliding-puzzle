@@ -126,7 +126,6 @@ class Puzzle {
 class PuzzleCat extends Puzzle {
 	constructor(tiles) {
 		super();
-		this.tiles = tiles;
 		this.init();
 	}
 	init() {
@@ -147,6 +146,7 @@ class PuzzleCat extends Puzzle {
 		});
 	}
 	thumbnailHandler(idx) {
+		this.cat = this.cats[idx];
 		if (this.cats[idx] === 'barns') {
 			this.background[idx].style.backgroundImage = "url(images/" +  "barns.jpg)";
 			this.mainBarns.className = "main-cat";
@@ -158,6 +158,7 @@ class PuzzleCat extends Puzzle {
 			this.mainChedda.className = "main-cat";
 			this.congratulate[idx].className = "hide";
 		}
+		this.label = null;
 	}
 }
 

@@ -25,6 +25,14 @@
     height: 75px;
     cursor: pointer;
 }
+.main {
+    text-align: center;
+    -ms-flex: 1;
+    -webkit-box-flex: 1;
+    -moz-box-flex: 1;
+    -ms-box-flex: 1;
+    box-flex: 1;
+}
 .layout {
     width: 333px;
     height: 345px;
@@ -57,4 +65,63 @@
 }
 .hide {
     display: none;
+}
+.btn {
+    color: #fff;
+    background-color: #428bca;
+    border-color: #357ebd;
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.428571429;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    margin: 5px;
+}
+.btn:disabled, .btn[disabled] {
+    pointer-events: none;
+    cursor: not-allowed;
+    opacity: .65;
+}
+.pos0 {
+    left: 0;
+    top: 0;
+}
+.pos1 {
+    left: 111px;
+    top: 0;
+}
+.pos2 {
+    left: 222px;
+    top: 0;
+}
+.pos3 {
+    left: 0;
+    top: 115px;
+}
+.pos4 {
+    left: 111px;
+    top: 115px;
+}
+.pos5 {
+    left: 222px;
+    top: 115px;
+}
+.pos6 {
+    left: 0;
+    top: 230px;
+}
+.pos7 {
+    left: 111px;
+    top: 230px;
+}
+.pos8 {
+    left: 222px;
+    top: 230px;
 }
