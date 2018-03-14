@@ -136,12 +136,18 @@ class PuzzleCat extends Puzzle {
 		this.congratulate = document.querySelectorAll('.congratulate');
 		this.mainBarns = this.mainCat[0];
 		this.mainChedda = this.mainCat[1];
+		this.shuffle = document.querySelectorAll('.shuffle');
 		this.handlers()
 	}
 	handlers() {
 		this.thumbnails.forEach((thumbnail, idx) => {
 			thumbnail.addEventListener('click', () => {
 				this.thumbnailHandler(idx);
+			});
+		});
+		this.shuffle.forEach((button) => {
+			button.addEventListener('click', () => {
+				this.shufflePuzzle();
 			});
 		});
 	}
@@ -159,6 +165,14 @@ class PuzzleCat extends Puzzle {
 			this.congratulate[idx].className = "hide";
 		}
 		this.label = null;
+	}
+	shufflePuzzle() {
+		let tempLabel;
+		do {
+			tempLabel = buildLabel();
+		} while (!this.solvable(tempLabel));
+		this.label = tempLabel;
+		console.log('label: ', this.label);
 	}
 }
 
