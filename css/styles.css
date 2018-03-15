@@ -131,3 +131,32 @@
 .animate {
     transition: all 0.5s ease;
 }
+.progress-ring {
+    border-radius: 50%;
+    border-top: 3px solid #324fb1;
+    border-right: 3px solid transparent;
+    width: 25px;
+    height: 25px;
+    -webkit-animation: spinner 2s linear infinite;
+    animation: spinner .6s linear infinite;
+    margin-top: 1em;
+    display: inline-block;
+}
+
+@-webkit-keyframes spinner {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes spinner {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
