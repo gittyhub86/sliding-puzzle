@@ -135,7 +135,7 @@ class Puzzle {
 }
 
 class PuzzleCat extends Puzzle {
-	constructor(tiles) {
+	constructor() {
 		super();
 		this.init();
 	}
