@@ -150,6 +150,7 @@ class PuzzleCat extends Puzzle {
 		this.mainChedda = this.mainCat[1];
 		this.shuffle = document.querySelectorAll('.shuffle');
 		this.solve = document.querySelectorAll('.solve');
+		this.progressRing = document.querySelector('#progress-ring');
 		this.handlers()
 	}
 	handlers() {
@@ -166,6 +167,8 @@ class PuzzleCat extends Puzzle {
 		this.solve.forEach((button) => {
 			button.addEventListener('click', () => {
 				if (this.label && this.label !== this.goal) {
+					button.disabled = true;
+					const promiseOne = this.promiseInitAnimate();
 					const result = this.solution();
 					console.log('result: ', result);
 					this.solutionAnimation(result);
@@ -297,9 +300,6 @@ class PuzzleCat extends Puzzle {
 		this.label = newLabel;
 	}
 	solutionAnimation(path) {
-		this.removeHandlers.forEach(handler => {
-				handler();
-		});
 		$.each(this.tiles, (key, tile) => {
 			tile.classList.remove("animate");
 		});
@@ -316,6 +316,19 @@ class PuzzleCat extends Puzzle {
 			}
 		}
 		this.label = this.goal;
+	}
+	promiseInitAnimate() {
+		const promise = new Promise((resolve, reject) => {
+			this.progressRing.classList.remove('hide');
+			this.removeTileHandler();
+			this.shuffle.forEach((button) => {
+				button.disabled = true;
+			});
+			window.setTimeout(() => {
+				resolve();
+			}, 300);
+		});
+		return promise;
 	}
 }
 
