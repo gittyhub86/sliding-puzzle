@@ -166,7 +166,6 @@ class PuzzleCat extends Puzzle {
 		this.solve.forEach((button) => {
 			button.addEventListener('click', () => {
 				if (this.label && this.label !== this.goal) {
-					console.log('this.label: ', this.label);
 					const result = this.solution();
 					console.log('result: ', result);
 					this.solutionAnimation(result);
@@ -200,6 +199,8 @@ class PuzzleCat extends Puzzle {
 		$.each(this.tiles, (key, tile) => {
 			this.removeHandlers.push(this.listener(tile, 'click', this.moveTileHandler(tile)));
 		});
+		console.log('this.tiles: ', this.tiles)
+		this.tiles.stop(true, true);
 		let tempLabel;
 		do {
 			tempLabel = buildLabel();
