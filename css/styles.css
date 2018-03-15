@@ -66,6 +66,9 @@
 .hide {
     display: none;
 }
+.menu-buttons {
+    margin-top: 0.7em;
+}
 .btn {
     color: #fff;
     background-color: #428bca;

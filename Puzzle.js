@@ -12,6 +12,17 @@ class Puzzle {
 				[7, [4, 6, 8]],
 				[8, [5, 7]],
 			]);
+		this.pos = new Map([
+			[0, [0, 0]],
+			[1, [111, 0]],
+			[2, [222, 0]],
+			[3, [0, 115]],
+			[4, [111, 115]],
+			[5, [222, 115]],
+			[6, [0, 230]],
+			[7, [111, 230]],
+			[8, [222, 230]],
+		]);
 		if (order) {
 			this.label = order;
 			for (let i=0; i<order.length; i++) {
@@ -138,6 +149,7 @@ class PuzzleCat extends Puzzle {
 		this.mainBarns = this.mainCat[0];
 		this.mainChedda = this.mainCat[1];
 		this.shuffle = document.querySelectorAll('.shuffle');
+		this.solve = document.querySelectorAll('.solve');
 		this.handlers()
 	}
 	handlers() {
@@ -149,6 +161,18 @@ class PuzzleCat extends Puzzle {
 		this.shuffle.forEach((button) => {
 			button.addEventListener('click', () => {
 				this.shufflePuzzle();
+			});
+		});
+		this.solve.forEach((button) => {
+			button.addEventListener('click', () => {
+				if (this.label && this.label !== this.goal) {
+					console.log('this.label: ', this.label);
+					const result = this.solution();
+					console.log('result: ', result);
+					this.solutionAnimation(result);
+				} else {
+					console.log("Puzzle is already solved");
+				}
 			});
 		});
 	}
@@ -182,6 +206,9 @@ class PuzzleCat extends Puzzle {
 		} while (!this.solvable(tempLabel));
 		this.label = tempLabel;
 		console.log('label: ', this.label);
+		$.each(this.tiles, (key, tile) => {
+			tile.removeAttribute("style");
+		});
 		for (let i=0, len=this.label.length; i<len; i++) {
 			if (this.label[i] === '0') {
 				this.spot = i;
@@ -232,6 +259,7 @@ class PuzzleCat extends Puzzle {
 		};
 	}
 	playerMove(tile) {
+		console.log('Clicked tile');
 		if (this.shifts.get(this.spot).includes(tile.boardPos)) {
 			const spot = this.spot;
 			this.transition(tile.boardPos);
@@ -262,6 +290,27 @@ class PuzzleCat extends Puzzle {
 			}
 		}
 		this.label = newLabel;
+	}
+	solutionAnimation(path) {
+		this.removeHandlers.forEach(handler => {
+				handler();
+		});
+		$.each(this.tiles, (key, tile) => {
+			tile.classList.remove("animate");
+		});
+		for (let i=1, len=path.length; i<len; i++) {
+			let label = path[i].label;
+			for (let j=0, lenLabel=label.length; j <lenLabel; j++) {
+				if (label[j] === '0') {
+					this.spot = j;
+				} else {
+					const idx = parseInt(label[j]) - 1;
+					$(this.tiles[idx]).animate({"left": this.pos.get(j)[0] + "px"}, "fast")
+									  .animate({"top": this.pos.get(j)[1] + "px"}, "fast");
+				}
+			}
+		}
+		this.label = this.goal;
 	}
 }
 
