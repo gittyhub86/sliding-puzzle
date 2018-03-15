@@ -176,6 +176,10 @@ class PuzzleCat extends Puzzle {
 		});
 	}
 	thumbnailHandler(idx) {
+		this.removeTileHandler();
+		if (this.tiles) {
+			this.tiles.stop(true, true);
+		}
 		this.cat = this.cats[idx];
 		this.hideTiles();
 		if (this.cats[idx] === 'barns') {
