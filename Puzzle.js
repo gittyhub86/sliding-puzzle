@@ -169,9 +169,9 @@ class PuzzleCat extends Puzzle {
 				if (this.label && this.label !== this.goal) {
 					button.disabled = true;
 					const promiseOne = this.promiseInitAnimate();
-					const result = this.solution();
-					console.log('result: ', result);
-					this.solutionAnimation(result);
+					promiseOne.then(() => {
+						const promiseTwo = this.promiseAnimateSolution();
+					});
 				} else {
 					console.log("Puzzle is already solved");
 				}
@@ -318,7 +318,7 @@ class PuzzleCat extends Puzzle {
 		this.label = this.goal;
 	}
 	promiseInitAnimate() {
-		const promise = new Promise((resolve, reject) => {
+		const promise = new Promise((resolve) => {
 			this.progressRing.classList.remove('hide');
 			this.removeTileHandler();
 			this.shuffle.forEach((button) => {
@@ -328,6 +328,17 @@ class PuzzleCat extends Puzzle {
 				resolve();
 			}, 300);
 		});
+		return promise;
+	}
+	promiseAnimateSolution() {
+		const promise = new Promise((resolve) => {
+						       const result = this.solution();
+							   console.log('Total number of moves: ', result.length-1);
+							   this.solutionAnimation(result);
+							   window.setTimeout(() => {
+							       resolve();
+							   });
+						   });
 		return promise;
 	}
 }
