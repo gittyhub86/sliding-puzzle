@@ -284,6 +284,7 @@ class PuzzleCat extends Puzzle {
 				else {
 					this.congratulate[1].classList.remove('hide');
 				}
+				this.removeTileHandler();
 			}
 		}
 	}
