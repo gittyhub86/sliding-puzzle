@@ -37,7 +37,6 @@ class Puzzle {
 		const label = this.label;
 		const blankLocation = this.spot;
 		const newBlankLabel = this.label[to];
-		//const newBlankLabel = num.toString();
 		let newLabel = '';
 		for (let i=0; i<9; i++) {
 			if (i === blankLocation) {
@@ -68,7 +67,6 @@ class Puzzle {
 				if (lastNode.label === lastNode.goal) {
 					if (shortest === null || tmpPath.length < shortest.length) {
 						shortest = tmpPath;
-						console.log('found shortest: ', shortest);
 					}
 				}
 				if (shortest === null || tmpPath.length+1 < shortest.length) {
@@ -182,8 +180,6 @@ class PuzzleCat extends Puzzle {
 							button.disabled = false;
 						});
 					});
-				} else {
-					console.log("Puzzle is already solved");
 				}
 			});
 		});
@@ -216,14 +212,12 @@ class PuzzleCat extends Puzzle {
 		$.each(this.tiles, (key, tile) => {
 			this.removeHandlers.push(this.listener(tile, 'click', this.moveTileHandler(tile)));
 		});
-		console.log('this.tiles: ', this.tiles)
 		this.tiles.stop(true, true);
 		let tempLabel;
 		do {
 			tempLabel = buildLabel();
 		} while (!this.solvable(tempLabel));
 		this.label = tempLabel;
-		console.log('label: ', this.label);
 		$.each(this.tiles, (key, tile) => {
 			tile.removeAttribute("style");
 		});
@@ -277,7 +271,6 @@ class PuzzleCat extends Puzzle {
 		};
 	}
 	playerMove(tile) {
-		console.log('Clicked tile');
 		if (this.shifts.get(this.spot).includes(tile.boardPos)) {
 			const spot = this.spot;
 			this.transition(tile.boardPos);
@@ -340,7 +333,6 @@ class PuzzleCat extends Puzzle {
 	promiseAnimateSolution() {
 		const promise = new Promise((resolve) => {
 						       const result = this.solution();
-							   console.log('Total number of moves: ', result.length-1);
 							   this.solutionAnimation(result);
 							   window.setTimeout(() => {
 							       resolve();
@@ -349,7 +341,3 @@ class PuzzleCat extends Puzzle {
 		return promise;
 	}
 }
-
-const order = '876543210';
-const p = new Puzzle(order);
-p.solution();
